@@ -13,6 +13,9 @@ class Qsolutions_Magemlm_Block_Adminhtml_Unilevel extends Mage_Adminhtml_Block_T
     
     protected $_addButtonLabel = 'Create new Unilevel Compensation Plan';
 
+	/**
+     * Constructor. Set template.
+     */
     public function __construct() {        
         parent::__construct();
 		$this->setTemplate('magemlm/unilevel/view.phtml');        

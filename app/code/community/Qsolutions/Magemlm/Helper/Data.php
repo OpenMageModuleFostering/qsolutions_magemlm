@@ -37,8 +37,26 @@ class Qsolutions_Magemlm_Helper_Data
 	
 	public function getCustomerImage ($custemerId) {
 		$customerMlmModel = Mage::getModel('magemlm/customer')->load($custemerId , 'customer_id');
-		return $customerMlmModel->getMagemlmImage();
+		$image =  $customerMlmModel->getMagemlmImage();
+
+        if ($image == '' ) {
+            $customerModel 	= Mage::getModel('customer/customer')->load($custemerId);
+            $gender			= $customerModel->getGender();
+
+            if ($gender == '124') {
+                $genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'female.png';
+            } else if ($gender == '123' ) {
+                $genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'male.png';
+            } else {
+
+            }
+            $image = $genderImg;
+        } else {
+            $image = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . $image;
+        }
+        return '<img src="' . $image . '" width="80%" />';
 	}
+
 	
 	public function compensationSum () {
 		$sum	= 0;
@@ -59,7 +77,7 @@ class Qsolutions_Magemlm_Helper_Data
 				exit;
 			}
 		} else {
-			
+			return date('Y-m');
 		}
 	}
 	
@@ -70,15 +88,20 @@ class Qsolutions_Magemlm_Helper_Data
 	
 	
 	public function countMonths($start, $end) {
-	    $startParsed 	= date_parse_from_format('Y-m', $start);
-	    $startMonth 	= $startParsed['month'];
-	    $startYear 		= $startParsed['year'];
-	
-	    $endParsed 		= date_parse_from_format('Y-m', $end);
-	    $endMonth 		= $endParsed['month'];
-	    $endYear 		= $endParsed['year'];
-	
-	    return ($endYear - $startYear) * 12 + ($endMonth - $startMonth) + 1;
+		
+		if ($start != $end ) {
+		    // $startParsed 	= date_parse_from_format('Y-m', $start);
+		    $startMonth 	= date('m' , strtotime($start)) ; // ['month'];
+		    $startYear 		= date('Y' , strtotime($start)) ; // ['year']
+		
+		    // $endParsed 		= date_parse_from_format('Y-m', $end);
+		    $endMonth 		= date('m' , strtotime($end)) ; // ['month']
+		    $endYear 		= date('Y' , strtotime($end)) ; //['year'];
+		
+		    return ($endYear - $startYear) * 12 + ($endMonth - $startMonth) + 1;
+		} else {
+			return 0;
+		}
 	}
 	
 	

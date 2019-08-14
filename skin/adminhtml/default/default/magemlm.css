@@ -1,43 +1,43 @@
-/* Header */
-.brand{
-    color 		: #777 !important;	
-    font-family 	: georgia;
-    font-style 		: italic;
+/* Basic styling */
+/* Draw the lines */
+.mageMlm .line {
+    height                : 20px;
+    width                 : 4px;
 }
 
-/* list stuff */
-#org{
-    background-color 	: white;
-    margin 		: 10px;
-    padding 		: 10px;
+.mageMlm .ChartDown {
+    background-color 		: #555;
+    margin 				: 0px auto;
 }
 
-#show-list{
-    cursor: pointer;
+.mageMlm .ChartTop {
+    border-top          : 2px solid #555;
 }
 
-/* bootstrap overrides */
-.alert-message{
-    margin              : 1px 0;
+.mageMlm .ChartLeft {
+    border-right          : 2px solid #555 !important;
 }
 
-.topbar{
-    position 		: absolute;
+.mageMlm .ChartRight {
+    border-left           : 2px solid #555 !important;
 }
 
-/* Custom chart styling */
-.jOrgChart {
-    margin              : 10px;
-    padding             : 20px;
+/* node cell */
+.mageMlm td {
+    text-align            : center;
+    vertical-align        : top;
+    padding-left          : 2px;
+    padding-right: 2px;
 }
 
-/* Custom node styling */
-#magemlm_structure .node {
-    font-size           : 12px;
-    background-color 	: silver;
-    border 		: 1px solid gray;
-    color 		: #555;
-    -moz-border-radius 	: 8px;
+/* The node */
+.mageMlm .node {
+    font-size 			: 12px;
+    background-color 	: #fff;
+    border 				: 1px solid #c4c1bc;
+    min-height: 90px;;
+    width:  90px;
+    margin: auto;
 }
 .node p{
     font-family 	: tahoma;
@@ -46,69 +46,21 @@
     padding 		: 2px;
 }
 
-/* Basic styling */
-/* Draw the lines */
-#magemlm_structure .struc_line {
-    height              : 20px;
-    width               : 4px;
+/* jQuery drag 'n drop */
+
+.drag-active {
+    border-style			: dotted !important;
 }
 
-#magemlm_structure .struc_down {
-    background-color 	: #444;	
-    margin              : 0px auto;
-    width               : 2px;
+.drop-hover {
+    border-style			: solid !important;
+    border-color 			: #E05E00 !important;
 }
 
-#magemlm_structure .struc_top {
-    border-top          : 1px solid #444;
-}
-
-#magemlm_structure .struc_left {
-    border-right        :1px solid #444;
-}
-
-#magemlm_structure .struc_right {
-    border-left         : 1px solid #444;
-}
-
-#magemlm_structure td {
-    text-align          : center;
-    vertical-align      : top;
-    padding             : 0;
-}
-
-/* The node */
-#magemlm_structure .node {
-    
-    background 			: #FBFAF6;
-    display             : inline-block;
-    width               : 90px;
-    min-height			: 105px;
-    z-index             : 10;
-    margin-left         : 2px;
-    margin-right        : 2px;
-    font-size           : 12px;
-    border 				: 1px solid silver;
-    color 				: #555;
-    padding:			0px;
-}
-
-.node .magemlm_name {
-	background-color 	: silver;
-	font-weight 		: bold;
-	margin-bottom 		: 3px;
-	color 				: white;
-	height				: 40px;
-	background: url("../images/bkg_block-title-account.gif") repeat-x scroll 0 100% #FC9D36;
-}
-
-
-#magemlm_structure .node.expanded {
-    background: #E3EFF1;
-}
-
-#magemlm_structure .node.contracted {
-    background: url("images/filter_row_bg.gif") repeat-x scroll 0 0 #E3EFF1;
+.node .userName {
+    color: #fff;
+    font-weight: bold;
+    background: #fc9d36; border:0; padding:3px 10px;
 }
 
 /* jQuery drag 'n drop */

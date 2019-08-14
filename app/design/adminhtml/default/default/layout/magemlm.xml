@@ -2,10 +2,8 @@
 <layout version="0.1.0">
     
     <default> 
-        <reference name="head"> 
-            <action method="addJs"><js>jquery/jquery-1.9.1.js</js></action>
-            <action method="addJs"><js>jquery/jquery.jOrgChart.js</js></action>
-            <action method="addCss"><css>magemlm.css</css></action>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><name>magemlm.css</name></action>
         </reference>
    	</default>
    

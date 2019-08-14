@@ -11,7 +11,6 @@
  
 class Qsolutions_Magemlm_Model_Resource_Commissions extends Mage_Core_Model_Resource_Db_Abstract {
     
-    
     protected function _construct()
     {
         $this->_init('magemlm/commissions' , 'commission_id');

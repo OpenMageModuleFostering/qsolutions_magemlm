@@ -3,11 +3,11 @@
     "type": "magento-module",
     "license": "OSL-v3.0",
     "homepage": "",
-    "description": "Multilevel Compensation Plan",
+    "description": "Change your store into simple MultilevelMarketing site with Unilevel Compensation plan",
     "authors": [
     {
-        "name": "Qsolutions",
-        "email": "jakub.winkler@gmail.com"
+        "name": "Qsolutions Studio",
+        "email": "jwinkler@qsolutions.com.pl"
     }
 ],
     "suggest": {

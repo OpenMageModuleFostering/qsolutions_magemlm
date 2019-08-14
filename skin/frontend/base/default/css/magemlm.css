@@ -1,172 +1,86 @@
-/* Header */
-.brand{
-    color 		: #777 !important;	
-    font-family 	: georgia;
-    font-style 		: italic;
-}
-
-/* list stuff */
-#org{
-    background-color 	: white;
-    margin 		: 10px;
-    padding 		: 10px;
-}
-
-#show-list{
-    cursor: pointer;
-}
-
-/* bootstrap overrides */
-.alert-message{
-    margin              : 1px 0;
-}
-
-.topbar{
-    position 		: absolute;
-}
-
-/* Custom chart styling */
-.jOrgChart {
-    margin              : 10px;
-    padding             : 20px;
-}
-
-.node p{
-    font-family 	: tahoma;
-    font-size 		: 10px;
-    line-height 	: 11px;
-    padding 		: 2px;
-}
-
 /* Basic styling */
 /* Draw the lines */
-#magemlm_structure .struc_line {
-    height              : 20px;
-    width               : 4px;
+.mageMlm .line {
+  height                : 20px;
+  width                 : 4px;
 }
 
-#magemlm_structure .struc_down {
-    background-color 	: #444;	
-    margin              : 0px auto;
-    width               : 2px;
+.mageMlm .ChartDown {
+  background-color 		: #555;
+  margin 				: 0px auto;
 }
 
-#magemlm_structure .struc_top {
-    border-top          : 1px solid #444;
+.mageMlm .ChartTop {
+  border-top          : 2px solid #555;
 }
 
-#magemlm_structure .struc_left {
-    border-right        :1px solid #444;
+.mageMlm .ChartLeft {
+  border-right          : 2px solid #555 !important;
 }
 
-#magemlm_structure .struc_right {
-    border-left         : 1px solid #444;
+.mageMlm .ChartRight {
+  border-left           : 2px solid #555 !important;
 }
 
 /* node cell */
-#magemlm_structure td {
-    text-align          : center;
-    vertical-align      : top;
-    padding             : 0;
+.mageMlm td {
+  text-align            : center;
+  vertical-align        : top;
+  padding-left          : 2px;
+    padding-right: 2px;
 }
 
 /* The node */
-#magemlm_structure .node {
-    
-    background 			: #FBFAF6;
-    display             : inline-block;
-    width               : 100px;
-    min-height			: 95px;
-    z-index             : 10;
-    margin-left         : 2px;
-    margin-right        : 2px;
-    font-size           : 12px;
-    border 				: 1px solid silver;
-    color 				: #555;
-    padding:			0px;
+.mageMlm .node {
+	font-size 			: 12px;
+	background-color 	: #fff;
+	border 				: 1px solid #c4c1bc;
+    min-height: 90px;;
+	width:  90px;
+	margin: auto;
 }
-
-
-#magemlm_structure .node.expanded {
-    background: #E3EFF1;
-}
-
-#magemlm_structure .node.contracted {
-    background: url("images/filter_row_bg.gif") repeat-x scroll 0 0 #E3EFF1;
-}
+	.node p{
+		font-family 	: tahoma;
+		font-size 		: 10px;
+		line-height 	: 11px;
+		padding 		: 2px;
+	}
 
 /* jQuery drag 'n drop */
 
 .drag-active {
-    border-style	: dotted !important;
+  border-style			: dotted !important;
 }
 
 .drop-hover {
-    border-style	: solid !important;
-    border-color 	: #E05E00 !important;
+  border-style			: solid !important;
+  border-color 			: #E05E00 !important;
 }
 
-
-
-#magemlm_menu {
-	border 			 	: 1px solid silver;
-	background-color 	: white;
-	width 				: 250px;
-	min-height			: 100px;
-	display 			: none;
-	position 			: absolute;
-}
-
-
-.node .magemlm_name {
-	background-color 	: silver;
-	font-weight 		: bold;
-	margin-bottom 		: 3px;
-	height				: 40px;
-	color 				: white;
-	background: url("../images/bkg_block-title-account.gif") repeat-x scroll 0 100% #FC9D36;
-}
-
-
-#magemlm_menu#magemlm_menu ul li{
-	background-color 	: #FBFAF6;
-	height 				: 25px;
-	padding-top 		: 5px;
-	padding-left 		: 5px;
-}
-
-#magemlm_menu#magemlm_menu ul li:hover{
-    background: url("../images/bkg_block-title-account.gif") repeat-x scroll 0 100% #FC9D36;
-    border: 0 none;
+.node .userName {
+    color: #fff;
+    font-weight: bold;
+    background: #fc9d36; border:0; padding:3px 10px;
 }
 
 .magemlm-left {
-	width: 40%; 
-	float: left;
-	margin-right: 10px;
-	margin-top: 0px;
+    float: left;
+    cleaR: left;
+    widtH: 250px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 .magemlm-right {
-	width: 40%; 
-	float: right;
-	margin-top: 0px;
+    float: right;
+    clear: right;
+    widtH: 280px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
-
-.magemlm-full {clear: both; }
-
-
-.magemlm-full p{
-	text-align: center;
-	color: red;
-	margin: 0px;
-	font-size: 14px;
-}
-
-
-.magemlm-structure-body {
-	width: 100% ;
-	background: white;
-	
+.magemlm-full {
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
 }

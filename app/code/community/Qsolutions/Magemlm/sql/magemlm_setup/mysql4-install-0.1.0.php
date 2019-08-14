@@ -11,6 +11,6 @@ $installer = $this;
 $installer->startSetup();
 
 $conn   = $installer->getConnection();
-$conn->addColumn($this->getTable('customer_entity'), 'referral_id', 'bigint unsigned not null');
+// $conn->addColumn($this->getTable('customer_entity'), 'referral_id', 'bigint unsigned not null');
 
 $installer->endSetup(); 

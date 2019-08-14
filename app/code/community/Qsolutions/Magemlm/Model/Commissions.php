@@ -105,8 +105,8 @@ class Qsolutions_Magemlm_Model_Commissions extends Mage_Core_Model_Abstract {
 		$readConnection = $resource->getConnection('core_read');
         $query 			= ' select magemlm_commissions.customer_id as customer_id, 
 						       magemlm_commissions.created_at as created_at, 
-						       SUM(commission_value) as sum , 
-							CONCAT ( 
+						       sum(commission_value) as sum , 
+							concat( 
 							    (select value from customer_entity_varchar where customer_entity_varchar.entity_id = magemlm_commissions.customer_id and attribute_id = 1 limit 1) , " " , 
 							    (select value from customer_entity_varchar where customer_entity_varchar.entity_id = magemlm_commissions.customer_id and attribute_id = 2 limit 1)  
 							) as customerName ,

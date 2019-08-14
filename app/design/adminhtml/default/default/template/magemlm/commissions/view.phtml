@@ -1,13 +1,14 @@
-<?php 
-  
-	$controller			= Mage::app()->getRequest()->getControllerName(); 	// get controller name - we do it so changes in config.xml wont reflect extension integrity
+<?php
+
+  	$controller			= Mage::app()->getRequest()->getControllerName(); 	// get controller name - we do it so changes in config.xml wont reflect extension integrity
 	$action				= Mage::app()->getRequest()->getActionName();		// same here - action
 	$router				= Mage::app()->getRequest()->getRouteName();		// same here - router
 	$currentMonth		= Mage::app()->getRequest()->getParam('month'); 	// get request month for option selecting
 	$firstOrderDate	  	= Mage::helper('magemlm')->getFirstOrderDate();		// get first order ever created date
+
 	$monthCount 		= Mage::helper('magemlm')->countMonths($firstOrderDate, date('Y-m')); // count months - for reporting purposes		
-	$dateUrl 			= Mage::helper("adminhtml") -> getUrl($router . DS . $controller . DS . $action); // get come controller action
-		
+	$dateUrl 			= Mage::helper("adminhtml")->getUrl($router . DS . $controller . DS . $action); // get come controller action
+	
 	// set current month, if not selected
 	if ($currentMonth == '') $currentMonth = date('Y-m');
 	

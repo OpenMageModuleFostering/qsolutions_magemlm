@@ -31,6 +31,7 @@ class Qsolutions_Magemlm_Adminhtml_CommissionsController extends Mage_Adminhtml_
 		$msg 	= $this->_getSession()->getMessages(true); 
 		$this->getLayout()->getMessagesBlock()->addMessages($msg);             
         $this->_initLayoutMessages('adminhtml/session')->renderLayout();
+		
     }
 
 

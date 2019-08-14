@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <layout version="0.1.0">
 	
-	<default> 
-        <reference name="head">
-            <action method="addJs"><js>jquery/jquery-1.9.1.js</js></action>
-            <action method="addJs"><js>jquery/jquery.jOrgChart.js</js></action>
-            <action method="addCss"><css>css/magemlm.css</css></action>
+    <default> 
+        <reference name="head">            
+            <action method="addItem"><type>skin_css</type><name>css/magemlm.css</name></action>
         </reference>
-   	</default>
+        
+        <reference name="header">
+        	<block type="directory/currency" name="custom_currency_selector" template="magemlm/currency.phtml"/>
+        </reference>
+    </default>
 	
 	<customer_account>
 		<reference name="customer_account_navigation">

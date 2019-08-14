@@ -11,7 +11,6 @@ $installer = $this;
 $installer->startSetup();
 
 $conn   = $installer->getConnection();
-$conn->addColumn($this->getTable('customer_entity'), 'magemlm_image', 'varchar(255) not null');
-   
+//$conn->addColumn($this->getTable('customer_entity'), 'magemlm_image', 'varchar(255) not null'); 
 
 $installer->endSetup(); 
