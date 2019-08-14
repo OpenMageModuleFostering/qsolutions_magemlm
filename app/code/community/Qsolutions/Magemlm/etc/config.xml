@@ -1,0 +1,201 @@
+<config>
+    <modules>
+        <Qsolutions_Magemlm>
+            <version>0.1.4</version>
+        </Qsolutions_Magemlm>
+    </modules>
+    
+    <global>
+    	<!-- models -->
+        <models>
+            <magemlm>
+                <class>Qsolutions_Magemlm_Model</class>
+                <resourceModel>magemlm_resource</resourceModel>
+            </magemlm>
+            
+            <magemlm_resource>
+                <class>Qsolutions_Magemlm_Model_Resource</class>
+                <entities>
+                    <customer>
+                        <table>magemlm_customers</table>
+                    </customer>
+                    <unilevel>
+                    	<table>magemlm_unilevel</table>
+                    </unilevel>
+                    <commissions>
+                    	<table>magemlm_commissions</table>
+                    </commissions>
+                </entities>
+            </magemlm_resource>
+        </models>
+        
+        <!-- block -->
+        <blocks>
+            <magemlm>
+                <class>Qsolutions_Magemlm_Block</class>
+            </magemlm>
+        </blocks>
+        
+        <!-- helper -->
+        <helpers>
+            <magemlm>
+                <class>Qsolutions_Magemlm_Helper</class>
+            </magemlm>
+        </helpers>
+        
+        <!-- resources -->
+        <resources>
+            <magemlm_setup>
+                <setup>
+                    <module>Qsolutions_Magemlm</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </magemlm_setup>
+        </resources>
+        
+        <!-- observers -->
+        <events>
+        	<customer_register_success>
+        		<observers>
+                    <magemlm_observer>
+                        <class>magemlm/observer</class>
+                        <method>registerCustomer</method>
+                    </magemlm_observer>
+                </observers>
+        	</customer_register_success>
+        	
+            <controller_front_init_before>
+                <observers>
+                    <magemlm_observer>
+                        <class>magemlm/observer</class>
+                        <method>getLink</method>
+                    </magemlm_observer>
+                </observers>
+            </controller_front_init_before>
+            
+            <adminhtml_customer_save_after>
+                <observers>
+                    <magemlm_observer_save_customer>
+                        <type>singleton</type>
+                        <class>Qsolutions_Magemlm_Model_Observer</class>
+                        <method>saveCustomerMlmData</method>
+                    </magemlm_observer_save_customer>
+                </observers>
+            </adminhtml_customer_save_after>
+            
+            <checkout_onepage_controller_success_action>
+            	<observers>
+                    <magemlm_observer_compensation_plan>
+                        <type>singleton</type>
+                        <class>Qsolutions_Magemlm_Model_Observer</class>
+                        <method>saveCompensation</method>
+                    </magemlm_observer_compensation_plan>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            
+        </events>
+    </global>
+  
+    <admin>
+        <routers>
+            <magemlm>
+                <use>admin</use>
+                <args>
+                    <module>Qsolutions_Magemlm</module>
+                    <frontName>magemlm</frontName>
+                </args>
+            </magemlm>
+        </routers>
+        
+        <layout>
+            <updates>
+                <magemlm>
+                    <file>magemlm.xml</file>
+                </magemlm>
+            </updates>
+        </layout>
+    </admin>
+  
+    <frontend>
+    	<!-- controllers -->
+        <routers>
+            <magemlm>
+                <use>standard</use>
+                <args>
+                    <module>Qsolutions_Magemlm</module>
+                    <frontName>magemlm</frontName>
+                </args>
+            </magemlm>
+        </routers>
+        
+        <!-- layour update -->
+        <layout>
+            <updates>
+                <magemlm>
+                    <file>magemlm.xml</file>
+                </magemlm>
+            </updates>
+        </layout>
+        
+        <!-- frontend translation -->
+        <translate>
+            <modules>
+                <magemlm>
+                    <files>
+                        <default>Qsolutions_magemlm.csv</default>
+                    </files>
+                </magemlm>
+            </modules>
+        </translate>
+    </frontend>
+  
+    <adminhtml>
+    	<!-- adminhtml translation -->
+    	<translate>
+            <modules>
+                <magemlm>
+                    <files>
+                        <default>Qsolutions_magemlm.csv</default>
+                    </files>
+                </magemlm>
+            </modules>
+        </translate>
+        
+        <!-- admin menu -->
+        <menu>
+            <multilevel module="magemlm">
+                <title>Multilevel Settings</title>
+                <sort_order>100</sort_order>
+                <children>
+                    <magemlm_unilevel translate="title" module="magemlm">
+                    	<sort_order>1</sort_order>
+                        <title>Unilevel Commission Plan</title>
+                        <action>magemlm/adminhtml_unilevel</action>
+                    </magemlm_unilevel> -->
+                    <magemlmstructure module="magemlm">
+                    	<sort_order>2</sort_order>
+                        <action>magemlm/adminhtml_structure</action>
+                        <title>Show Entire Structure</title>
+                    </magemlmstructure>
+                    <magemlm_report module="magemlm">
+                    	<sort_order>3</sort_order>
+                        <action>magemlm/adminhtml_commissions</action>
+                        <title>Commission Report</title>
+                    </magemlm_report>
+                </children>
+            </multilevel>
+        </menu>
+        <!-- layout update -->
+        <layout>
+            <updates>
+                <magemlm>
+                    <file>magemlm.xml</file>
+                </magemlm>
+            </updates>
+        </layout>
+        
+    </adminhtml>
+</config>

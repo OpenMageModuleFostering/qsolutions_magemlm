@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Qsolutions_Magemlm",
+    "type": "magento-module",
+    "license": "OSL-v3.0",
+    "homepage": "",
+    "description": "Multilevel Compensation Plan",
+    "authors": [
+    {
+        "name": "Qsolutions",
+        "email": "jakub.winkler@gmail.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

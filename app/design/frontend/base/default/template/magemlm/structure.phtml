@@ -1,0 +1,73 @@
+<?php /*
+ * Structure template for frontend
+ * 
+ */ 
+ ?>
+<div class="page-title">
+	<h1><?php echo $this->__('My structure'); ?></h1>
+</div>
+
+<?php
+
+	function displayStructure($referralId) {
+		$collection = Mage::getModel('magemlm/customer')->getCollection()->addFieldToFilter('referrer_id', array('eq' => $referralId));
+
+		if ($collection -> count() > 0) {
+			echo '<ul>';
+			foreach ($collection as $customer) {
+				if (Mage::helper('magemlm')->customerExists($customer->getCustomerId())) {
+					
+					echo '<li id="' . $customer->getCustomerId() . '">';
+					$image =  Mage::helper('magemlm')->getCustomerImage($customer->getCustomerId());
+					
+					if ($image == '' ) {
+						$customerModel 	= Mage::getModel('customer/customer')->load($customer->getCustomerId());
+						$gender			= $customerModel->getGender();
+						// var_dump($gender);
+						
+						if ($gender == '124') {
+							$genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'female.png';
+						} else if ($gender == '123' ) {
+							$genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'male.png';
+						} else {
+							
+						}
+						$image = $genderImg;
+					} else {
+						$image = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . $image;
+					}
+					
+					echo '<div class="magemlm_name">' . Mage::helper('magemlm')->getCustomerName($customer->getCustomerId()) . '</div>';
+					echo '<img src="' . $image . '" height="80px" class="node_img" /><br /> ';
+					
+					displayStructure($customer -> getCustomerId());
+					echo '</li>';
+				}
+			}
+			echo '</ul>';
+		}
+	}
+?>
+
+<ul id="org" style="display:none;">
+	<li id="<?php echo Mage::helper('customer')->getCustomer()->getId(); ?>">
+		<?php echo '<div class="magemlm_name">' .  Mage::helper('customer')->getCustomer()->getName() . '</div>'; ?>
+		<?php echo '<img src="' . Mage::getBaseUrl('media') . DS . 'magemlm' . DS . Mage::helper('magemlm')->getCustomerImage(Mage::helper('customer')->getCustomer()->getId()) . '" width="60px" class="node_img" /><br /> '; '</div>'; ?>
+		<?php displayStructure(Mage::helper('customer')->getCustomer()->getId()); ?>
+	</li>
+</ul> 
+
+<div id="chart" class="orgChart" style="overflow: scroll;"></div>
+
+
+<script>
+
+	jQuery(document).ready(function() {
+		jQuery("#org").jOrgChart({
+			chartElement : '#chart',
+			dragAndDrop : true
+		});
+	});
+	
+
+</script>

@@ -1,0 +1,97 @@
+<?php
+	$stores 	= Mage::getModel('core/store') -> getCollection() -> toOptionHash();
+	$customerId = $this->getCustomer()->getId();
+	$referralId = $this->getCustomer()->getReferralId();
+	$customerCollection = Mage::getModel('customer/customer')->getCollection()
+        ->addAttributeToSelect('*')
+        ->addFieldToFilter('entity_id', array('neq' => $customerId));
+		
+	$customerReferrer 	= Mage::getModel('magemlm/customer')->load($customerId , 'customer_id');
+	$referrerId			= $customerReferrer->getReferrerId();
+
+?>
+
+<div id="customer_info_tabs_customer_edit_tab_action_content" class="box-left">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Refferal') ?></h4>
+        </div>
+        <div id="group_fields4" class="fieldset fieldset-wide">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td>
+                            	<?php echo $this->__('Refferal Person:') ?>
+                            	<p class="note">
+                                    <span><?php echo $this->__('Store views are displayed first.') ?></span>
+                                </p>
+                            </td>
+                            <td class="value">
+                                <select class="select" name="magemlm_referrer">
+                                	<?php foreach ($stores as $key => $store) : ?>
+							    	<option value="store_<?php echo $key ?>" <?php (($referrerId == $customerId) ? 'selected' : '' )?>><?php echo $this->__('-- direct cooworker: ') ?><?php echo $store ?></option>
+							    	<?php endforeach ; ?>
+                                    <?php foreach ($customerCollection as $customer) : ?>
+                                    <option value="<?php echo $customer->getId(); ?>" <?php echo (($referrerId == $customer->getId()) ? 'selected' : ''); ?>><?php echo $customer->getName() ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <p class="note">
+                                    <span><?php echo $this->__('Please be very carefull when changing refferal.') ?></span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="box-right">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+	        <h4 class="icon-head head-account"><?php echo $this->__('Customer Image') ?></h4>            
+	        <?php $customerMagemlm 	= Mage::getModel('magemlm/customer')->load($customerId, 'customer_id'); ?>
+	        <?php 
+	        	$image			= $customerMagemlm->getMagemlmImage();
+				
+				if ($image == '') {
+					$gender			= $this->getCustomer()->getGender();
+					if ($gender == '124') {
+						$genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'female.png';
+					} else if ($gender == '123' ) {
+						$genderImg = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . 'male.png';
+					} else {
+						
+					}
+					$image = $genderImg;
+				} else {
+					$image = Mage::getBaseUrl('media') . DS . 'magemlm' . DS . $customerMagemlm->getMagemlmImage();
+				}
+	       	?>
+        </div>
+        <div class="fieldset">
+            <div class="hor-scroll">
+                <table class="form-list" cellspacing="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td class="value">
+                                <?php echo $this->__('Image:') ?><br />
+                                <img src="<?php echo $image; ?>" width="80%"/>
+                                <div class="clear"></div>
+                                <input type="file" title="File" name="magemlm_customer_picture">
+                                <p class="form-list note">
+                                    <span><?php echo $this->__('Uploading new image will replace the current image.') ?></span>
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear"></div>

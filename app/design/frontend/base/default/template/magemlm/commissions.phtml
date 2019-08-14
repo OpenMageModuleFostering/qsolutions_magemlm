@@ -1,0 +1,106 @@
+<?php /*
+ * Profile template for frontend
+ *
+ */
+ 
+ 	// customer createdAt date is important for filtering
+	$customerCreatedAt  = Mage::helper('magemlm')->getCustomerCreatedDate();
+	$monthCount 		= Mage::helper('magemlm')->countMonths($customerCreatedAt, date('Y-m'));
+	$customerLevel	    = Mage::helper('magemlm')->getCustomerLevel(Mage::helper('customer')->getCustomer()->getId());
+	
+	$controller			= Mage::app()->getRequest()->getControllerName();
+	$action				= Mage::app()->getRequest()->getActionName();
+	$router				= Mage::app()->getRequest()->getRouteName();
+	$currentMonth		= Mage::app()->getRequest()->getParam('month'); // get request month for option selecting
+	
+	// set current month, if not selected
+	if ($currentMonth == '') $currentMonth = date('Y-m');
+	$customerCommissions  	= Mage::getModel('magemlm/commissions')->getCollection()
+										->addFieldToFilter('customer_id' , array ('eq'  => Mage::helper('customer')->getCustomer()->getId() ))
+										->addFieldToFilter('created_at'  , array ('like' => $currentMonth . '%' ));
+	
+?>
+
+
+<div class="page-title">
+	<h1><?php echo $this -> __('My Commissions:'); ?></h1>
+</div>
+
+
+<div class="pager">
+	<p class="amount">
+    	<strong><?php echo $this->__('Current month:'); ?> <?php echo ($currentMonth != '') ? $currentMonth : date ('Y-m'); ?></strong>
+    </p>
+    
+    <div class="limiter">
+        <label><?php echo $this->__('Show commission for date: '); ?></label>
+        <select onChange="setLocation(this.value);">
+        	<?php for ($i = 0; $i <  $monthCount ; $i++) : ?>
+       			<?php 
+       				$time 	= strtotime($customerCreatedAt);
+					$date 	= date("Y-m", strtotime("$i month", $time));
+				?>
+        	<option value="<?php echo Mage::getBaseUrl() . $router . DS . $controller . DS . $action . DS . "month" . DS . $date ?>" <?php echo ($date == $currentMonth) ? 'selected' : '' ?>>
+        		<?php echo $date ?>
+        	</option>
+			<?php endfor ; ?>
+        </select>
+    </div>
+</div>
+
+<table id="my-orders-table" class="data-table">
+    <colgroup>
+    	<col width="1">
+    	<col width="1">
+    	<col width="1">
+    	<col width="1">
+    	<col width="1">
+    </colgroup>
+    	<thead>
+            <tr class="first last">
+            	<th><?php echo $this->__('Order Date') ?> </th>
+                <th><?php echo $this->__('Order Id') ?></th>
+                <th><?php echo $this->__('Commission level')?></th>
+                <th><?php echo $this->__('Commission value')?></th>
+                <th><?php echo $this->__('Commission status') ?></th>
+            </tr>
+        </thead>
+        
+       <?php if ($customerCommissions->count() == 0) : ?>
+        <tbody>
+            <tr>
+            	<td colspan="5" align="center">
+            		<?php echo $this->__('There are no commissions for this month') ?>
+            	</td>
+            </tr>
+        </tbody>
+      <?php else : ?>
+        <tbody>
+        	<?php $commissionTotal = 0; ?>
+        	<?php $i = 1; foreach ($customerCommissions as $commission) : ?>
+            <tr <?php echo ($i % 2 == 0 ? '' : 'class="even"') ?> >
+            	<td><?php echo date('Y-m-d' , strtotime($commission->getCreatedAt())) ?> </td>
+                <td><?php echo $commission->getOrderId();?> </td>
+                <td><?php echo ((int)$commission->getCommissionLevel() - (int)$customerLevel) ; ?> </td>
+                <td><?php echo Mage::helper('core')->currency($commission->getCommissionValue(), true, false) ; $commissionTotal += $commission->getCommissionValue(); ?> </td>
+                <td><?php 
+                			if ($commission->getCommissionStatus()) {
+                				echo 'Paid';
+                			} else {
+                				echo 'Not paid';
+                			}?>
+               	</td>
+            </tr>
+            <?php $i++; ?>
+           <?php endforeach ; ?>
+        </tbody>
+        <?php endif; ?>
+        <tfoot>
+            <tr class="subtotal first">
+        		<td colspan="4" class="a-right"><strong><?php echo $this->__('Commission total') ?> </strong></td>
+        		<td class="last a-right">
+                    <span class="a-right"><strong><?php echo Mage::helper('core')->currency($commissionTotal, true, false) ;?></strong></span>
+                </td>
+        </tfoot>
+ </table>
+

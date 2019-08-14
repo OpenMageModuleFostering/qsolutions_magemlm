@@ -1,0 +1,166 @@
+/* Header */
+.brand{
+    color 		: #777 !important;	
+    font-family 	: georgia;
+    font-style 		: italic;
+}
+
+/* list stuff */
+#org{
+    background-color 	: white;
+    margin 		: 10px;
+    padding 		: 10px;
+}
+
+#show-list{
+    cursor: pointer;
+}
+
+/* bootstrap overrides */
+.alert-message{
+    margin              : 1px 0;
+}
+
+.topbar{
+    position 		: absolute;
+}
+
+/* Custom chart styling */
+.jOrgChart {
+    margin              : 10px;
+    padding             : 20px;
+}
+
+/* Custom node styling */
+#magemlm_structure .node {
+    font-size           : 12px;
+    background-color 	: silver;
+    border 		: 1px solid gray;
+    color 		: #555;
+    -moz-border-radius 	: 8px;
+}
+.node p{
+    font-family 	: tahoma;
+    font-size 		: 10px;
+    line-height 	: 11px;
+    padding 		: 2px;
+}
+
+/* Basic styling */
+/* Draw the lines */
+#magemlm_structure .struc_line {
+    height              : 20px;
+    width               : 4px;
+}
+
+#magemlm_structure .struc_down {
+    background-color 	: #444;	
+    margin              : 0px auto;
+    width               : 2px;
+}
+
+#magemlm_structure .struc_top {
+    border-top          : 1px solid #444;
+}
+
+#magemlm_structure .struc_left {
+    border-right        :1px solid #444;
+}
+
+#magemlm_structure .struc_right {
+    border-left         : 1px solid #444;
+}
+
+#magemlm_structure td {
+    text-align          : center;
+    vertical-align      : top;
+    padding             : 0;
+}
+
+/* The node */
+#magemlm_structure .node {
+    
+    background 			: #FBFAF6;
+    display             : inline-block;
+    width               : 90px;
+    min-height			: 105px;
+    z-index             : 10;
+    margin-left         : 2px;
+    margin-right        : 2px;
+    font-size           : 12px;
+    border 				: 1px solid silver;
+    color 				: #555;
+    padding:			0px;
+}
+
+.node .magemlm_name {
+	background-color 	: silver;
+	font-weight 		: bold;
+	margin-bottom 		: 3px;
+	color 				: white;
+	height				: 40px;
+	background: url("../images/bkg_block-title-account.gif") repeat-x scroll 0 100% #FC9D36;
+}
+
+
+#magemlm_structure .node.expanded {
+    background: #E3EFF1;
+}
+
+#magemlm_structure .node.contracted {
+    background: url("images/filter_row_bg.gif") repeat-x scroll 0 0 #E3EFF1;
+}
+
+/* jQuery drag 'n drop */
+
+.drag-active {
+    border-style	: dotted !important;
+}
+
+.drop-hover {
+    border-style	: solid !important;
+    border-color 	: #E05E00 !important;
+}
+
+.magemlm-buttons {
+	float: right;
+}
+
+
+.magemlm-level {
+	font-size 	 	: 20px;
+	text-align 		: center;
+	padding 		: 0px;
+	margin 			: 0px;
+	font-weight 	: bold;
+}
+
+.magemlm-admin-edit {
+	background-color: #f0f0f0; width: 100px; float: right; height: 80px; border: 1px solid silver; cursor: pointer; margin-left: 2px;
+	background-image: url("images/admin_magemlm_edit.png");
+	background-position:center ;
+	background-repeat: no-repeat;
+	border-radius: 5px;
+}
+
+.magemlm-admin-delete {
+	background-color: #f0f0f0; width: 100px; float: right; height: 80px; border: 1px solid silver; cursor: pointer;
+	background-image: url("images/admin_magemlm_delete.png"); 
+	background-position:center ;
+	background-repeat: no-repeat;
+	border-radius: 5px;
+}
+
+.magemlm-admin-delete:hover {
+	background-color: #f8f8f8; cursor: pointer;
+	background-image: url("images/admin_magemlm_delete.png");
+	background-position:center ;
+	background-repeat: no-repeat;
+}
+
+.magemlm-admin-edit:hover {
+	background-color: #f8f8f8; cursor: pointer;
+	background-image: url("images/admin_magemlm_edit.png");
+	background-position:center ;
+	background-repeat: no-repeat;
+}

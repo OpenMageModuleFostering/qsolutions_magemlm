@@ -1,0 +1,130 @@
+<?php /*
+ * Profile template for frontend
+ * 
+ */
+ 	$totalCommission 	= Mage::getModel('magemlm/commissions')->getCommissionSummary($customerId);
+	$customerCreatedAt  = Mage::helper('magemlm')->getCustomerCreatedDate();
+	$monthCount 		= Mage::helper('magemlm')->countMonths($customerCreatedAt, date('Y-m'));
+	$customerId			= Mage::helper('customer')->getCustomer()->getId();
+	$totalCommission    = Mage::getModel('magemlm/commissions')->getCommissionSummary($customerId);
+	 
+?>
+ <div class="page-title">
+	<h1><?php echo $this->__('My MLM  profile'); ?></h1>
+</div>
+
+
+<div class="fieldset magemlm-full">
+	<h2 class="legend"><?php echo $this->__('Referral Link') ?></h2>
+    <p>
+    	<a href="<?php echo Mage::getModel('magemlm/referrallink')->link($customerId); ?>">
+    		<?php echo Mage::getModel('magemlm/referrallink')->link($customerId); ?>
+    	</a>
+    </p>
+</div>
+	 
+
+<div class="fieldset magemlm-left" style="clear: both;">
+	<h2 class="legend"><?php echo $this->__('Structure Data') ?></h2>
+    <table id="my-orders-table" class="data-table">
+    <colgroup>
+    	<col width="120">
+    	<col width="1">
+    </colgroup>
+    	<thead>
+            <tr class="first last">
+                <th><?php echo $this->__('Data')?></th>
+                <th><?php echo $this->__('Value')?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="first odd">
+                <td><?php echo $this->__('Frontline: '); ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('magemlm')->getFrontlineCount($customerId) ?> </span></td>
+            </tr>
+            <tr class="even">
+                <td><?php echo $this->__('Structure Depth: '); ?></td>
+                <?php 
+                	$depthMdl = Mage::helper('magemlm');
+					$depthMdl->structureDepth($customerId);
+					$depth = $depthMdl->maxDepth;
+				?>
+                <td><span class="nobr"><?php echo $depth ?></span></td>
+            </tr>
+            <tr class="first last odd">
+                <td><?php echo $this->__('Structure Count: '); ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('magemlm')->structureCount($customerId) ?></span></td>
+            </tr>
+        </tbody>
+ </table>
+</div>
+
+
+
+
+<div class="fieldset magemlm-right">
+	<h2 class="legend"><?php echo $this->__('Your picture') ?></h2>
+	<?php $customerMagemlm 	= Mage::getModel('magemlm/customer')->load($customerId, 'customer_id'); ?>
+	<?php $image			= Mage::getBaseUrl('media') . DS . 'magemlm' . DS . $customerMagemlm->getMagemlmImage(); ?>
+	
+	<p align="center">
+		<img src="<?php echo $image; ?>" width="95%"/>
+	</p>
+	<p align="center">
+		<?php echo $this->__('Your image is uploaded by MLM central') ?>
+	</p>
+</div>
+
+
+<div class="fieldset magemlm-left">
+	<h2 class="legend"><?php echo $this->__('Commission Data') ?></h2>
+    <table id="my-orders-table" class="data-table">
+    <colgroup>
+    	<col width="120">
+    	<col width="1">
+    </colgroup>
+    	<thead>
+            <tr class="first last">
+                <th><?php echo $this->__('Type')?></th>
+                <th><?php echo $this->__('Value')?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="first odd">
+                <td><?php echo $this->__('Total earnings: '); ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('core')->currency($totalCommission, true, false) ?> </span></td>
+            </tr>
+            <tr class="even">
+                <td><?php echo $this->__('Average monthly earnings: '); ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('core')->currency($totalCommission/$monthCount, true, false) ?> </span></td>
+            </tr>
+        </tbody>
+ </table>
+</div>
+
+
+<div class="fieldset magemlm-left">
+	<h2 class="legend"><?php echo $this->__('Personal Info') ?></h2>
+    <table id="my-orders-table" class="data-table">
+    <colgroup>
+    	<col width="120">
+    	<col width="1">
+    </colgroup>
+    	 <thead>
+         	<tr class="first last">
+                <th><?php echo $this->__('Type')?></th>
+                <th><?php echo $this->__('Value')?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="first odd">
+                <td><?php echo $this->__('Account created at: '); ?></td>
+                <td><span class="nobr"><?php echo date('Y-m-d' , strtotime($customerCreatedAt)); ?> </span></td>
+            </tr>
+            <tr class="even">
+                <td><?php echo $this->__('Referrer name: '); ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('magemlm')->getReferrerName($customerId) ; ?> </span></td>
+            </tr>
+        </tbody>
+ </table>
+</div>

@@ -1,0 +1,21 @@
+<?php /*
+ * Profile template for frontend
+ * 
+ */ 
+ ?>
+
+<div class="page-title">
+	<h1><?php echo $this->__('Unilevel Compensation Plan:'); ?></h1>
+</div>
+
+<?php $magemlmLevels 	= Mage::getModel('magemlm/unilevel') -> getCollection(); ?>
+<?php $i 				= 0;?>
+
+<?php foreach ($magemlmLevels as $magemlmLevel) : ?>
+	
+<div class="fieldset">
+	<h2 class="legend"><?php echo $magemlmLevel -> getLevelName(); ?></h2>
+    <p><strong> <?php echo $this->__('Commission Value') ?> <?php echo $magemlmLevel -> getLevelCommission(); ?>%</strong></p>
+ </div>
+
+<?php endforeach ; ?>

@@ -1,0 +1,32 @@
+<div id="magemlm_menu">
+	<ul>
+		<!-- <li>Menu 1</li>
+		<li>Menu 2</li>
+		<li>Menu 3</li>
+		<li>Menu 4</li> -->
+	</ul>
+</div>
+
+<script>
+	jQuery("#chart").bind("contextmenu", function(event) {
+    	var className = (jQuery(event.target).attr('class'));
+    	
+    	if (className == "node") {
+    		var id 		  = (jQuery(event.target).attr('id'));
+    	} else if (className == "node_img") {
+    	    var id 		  = jQuery(event.target).parent().attr('id');   
+    	}
+    	
+    	jQuery("#magemlm_menu").css({
+    		top 	: event.pageY-15,
+    		left 	: event.pageX-15
+  		}).fadeIn(250);
+  		
+    	return false;
+	});	
+	
+
+	jQuery("#magemlm_menu").mouseleave(function(){
+    	jQuery(this).fadeOut(250);
+  	 });
+</script>

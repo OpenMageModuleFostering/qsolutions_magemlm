@@ -1,0 +1,128 @@
+<?php 
+  
+	$controller			= Mage::app()->getRequest()->getControllerName(); 	// get controller name - we do it so changes in config.xml wont reflect extension integrity
+	$action				= Mage::app()->getRequest()->getActionName();		// same here - action
+	$router				= Mage::app()->getRequest()->getRouteName();		// same here - router
+	$currentMonth		= Mage::app()->getRequest()->getParam('month'); 	// get request month for option selecting
+	$firstOrderDate	  	= Mage::helper('magemlm')->getFirstOrderDate();		// get first order ever created date
+	$monthCount 		= Mage::helper('magemlm')->countMonths($firstOrderDate, date('Y-m')); // count months - for reporting purposes		
+	$dateUrl 			= Mage::helper("adminhtml") -> getUrl($router . DS . $controller . DS . $action); // get come controller action
+		
+	// set current month, if not selected
+	if ($currentMonth == '') $currentMonth = date('Y-m');
+	
+	$commissionsPaid		= Mage::getModel('magemlm/commissions')->calculateCommission($currentMonth , 1);
+	$commissionsUnpaid		= Mage::getModel('magemlm/commissions')->calculateCommission($currentMonth , 0);
+	
+?>
+
+
+<script>
+	function processPayment () {
+     	var checkedCount = 0;
+		$$('.customerId').each(function(element){
+		   if( $(element).checked )
+		   {
+		       checkedCount++;
+		   }
+		});
+        
+        if (checkedCount > 0) {
+        	paymentForm.submit();
+        	return true;
+        } else {
+        	alert("Please select at least 1 customer");
+        	return false;
+        }
+    };
+</script>
+
+<!-- commission month selector -->
+<div style="float: right; width: 300px; text-align: right;"><?php echo $this->__('Select date for commission report:') ?>
+	<select onChange="setLocation(this.value);">
+        	<?php for ($i = 0; $i <  $monthCount ; $i++) : ?>
+       			<?php 
+       				$time 	= strtotime($firstOrderDate);
+					$date 	= date("Y-m", strtotime("$i month", $time));
+				?>
+        	<option value="<?php echo $dateUrl . "month" . DS . $date ?>" <?php echo ($date == $currentMonth) ? 'selected' : '' ?>>
+        		<?php echo $date ?>
+        	</option>
+			<?php endfor ; ?>
+        </select>
+</div>
+
+
+<h3 class="icon-head head-sales-order"><?php echo $this->__('Commission report:')?> <?php echo $currentMonth; ?></h3>
+<hr />
+
+<p class="switcher"><label for="store_switcher"><?php echo $this->__('Unpaid Commissions for selected date:'); ?> <strong><?php echo $currentMonth ?></strong></label>	</p>
+
+<form id="payment_form" method="post" action="<?php echo $this->getUrl('*/*/pay')?>">
+<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+<input type="hidden" name="commissionDate" value="<?php echo $currentMonth; ?>" />
+
+<div class="grid" id="productListgrid" style="margin-top: -10px; margin-bottom: 20px; ">
+    <table cellspacing="0" id="gridProduct_table" class="data">
+        <colgroup>
+        	<col width="1">
+        	<col width="150">
+            <col width="150">
+            <col width="200">
+        </colgroup><thead>
+            <tr class="headings">
+            	<th>&nbsp;</th>
+            	<th class="no-link"><span class="no-br"><?php echo $this->__('Customer');?></span></th>
+                <th class="no-link"><span class="no-br"><?php echo $this->__('Customer email');?></span></th>
+                <th class="no-link a-right"><span class="no-br"><?php echo $this->__('Commission Value') ?></span></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyList">
+        	<?php $i = 1; foreach ($commissionsUnpaid as $commissionData) : ?>
+        	<tr <?php echo ($i % 2 == 0 ? 'class="even"' : '') ?>>
+        		<td><input type="checkbox" name="customerId[]" class="customerId" value="<?php echo $commissionData['customer_id']?>" ></td>
+        		<td><?php echo $commissionData['customerName'] ?></td>
+        		<td><?php echo $commissionData['email'] ?></td>
+        		<td class="a-right"><?php echo Mage::helper('core')->currency($commissionData['sum'], true, false) ?></td>
+        	</tr>
+        	<?php $i++; ?>
+        	<?php endforeach; ?>
+        </tbody>
+    </table>
+    </form>
+    
+    <div style="text-align: right">
+		<button id="markPaid" onClick="return processPayment(); "><span><?php echo $this->__('Mark selected commissions as paid')?> </span></button>
+	</div>
+</div>
+
+<p class="switcher"><label for="store_switcher"><?php echo $this->__('Paid Commissions for selected date:')?> <strong><?php echo $currentMonth ?></strong></label>	</p>
+<div class="grid" id="productListgrid" style="margin-top: -10px;">
+    <table cellspacing="0" id="gridProduct_table" class="data">
+        <colgroup><col width="150">
+            <col width="150">
+            <col width="200">
+        </colgroup><thead>
+            <tr class="headings">
+            	<th class="no-link"><span class="no-br"><?php echo $this->__('Customer');?></span></th>
+                <th class="no-link"><span class="no-br"><?php echo $this->__('Customer email');?></span></th>
+                <th class="no-link a-right"><span class="no-br"><?php echo $this->__('Commission Value') ?></span></th>
+            </tr>
+        </thead>
+        <tbody id="tbodyList">
+        	<?php $i = 1; foreach ($commissionsPaid as $commissionData) : ?> 
+        	<tr <?php echo ($i % 2 == 0 ? 'class="even"' : '') ?>>
+        		<td><?php echo $commissionData['customerName'] ?></td>
+        		<td><?php echo $commissionData['email'] ?></td>
+        		<td class="a-right"><?php echo Mage::helper('core')->currency($commissionData['sum'], true, false) ?></td>
+        	</tr>
+        	<?php $i++; ?>
+        	<?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+
+<script type="text/javascript">
+    paymentForm = new varienForm('payment_form', '');
+</script>
