@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Qsolutions_Magemlm",
+    "name": "OpenMageModuleFostering\/Qsolutions_Magemlm",
     "type": "magento-module",
     "license": "OSL-v3.0",
     "homepage": "",
     "description": "Change your store into simple MultilevelMarketing site with Unilevel Compensation plan",
     "authors": [
-    {
-        "name": "Qsolutions Studio",
-        "email": "jwinkler@qsolutions.com.pl"
-    }
-],
+        {
+            "name": "Qsolutions Studio",
+            "email": "jwinkler@qsolutions.com.pl"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
